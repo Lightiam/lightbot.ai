@@ -6,11 +6,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send } from 'lucide-react';
 import { useChat } from '../../lib/store/ChatContext';
 import { routeMessage } from '../../lib/router/ChatRouter';
+import { config } from '../../config';
 
 export const ChatContainer = () => {
   const { state, dispatch } = useChat();
   const [input, setInput] = useState('');
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleMessage = async (content: string) => {
     if (!content.trim()) return;
@@ -25,12 +25,11 @@ export const ChatContainer = () => {
     dispatch({ type: 'ADD_MESSAGE', payload: userMessage });
     setInput('');
 
-    // Get next state from router
     const nextNode = routeMessage(content, state.currentState);
     dispatch({ type: 'SET_STATE', payload: nextNode.id });
 
     try {
-      const response = await fetch(`${apiUrl}/api/chat`, {
+      const response = await fetch(`${config.apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
