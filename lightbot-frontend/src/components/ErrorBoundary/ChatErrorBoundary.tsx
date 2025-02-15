@@ -66,7 +66,7 @@ export class ChatErrorBoundary extends Component<Props, State> {
               We apologize for the inconvenience. Please try refreshing the page.
             </p>
             <div className="flex justify-center">
-              <Button onClick={this.handleReset} variant="outline">
+              <Button onClick={this.handleReset} className="bg-gray-100 hover:bg-gray-200">
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Try Again
               </Button>
