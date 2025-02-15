@@ -9,5 +9,7 @@ export const CustomHeader: React.FC = () => (
       backgroundColor: '#2979ff',
       color: 'white',
     }}
+    aria-label="Chat Header"
+    role="banner"
   />
 )
