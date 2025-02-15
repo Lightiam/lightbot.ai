@@ -1,5 +1,19 @@
 # lightbot.ai
 
-A conversational AI framework built on top of Botonic (https://github.com/hubtype/botonic).
+A modern conversational AI framework built with React and TypeScript, powered by Botonic architecture.
 
-This project aims to create intelligent chatbot experiences using React and modern AI technologies.
+## Overview
+lightbot.ai is a powerful framework for building intelligent chatbots and conversational applications. It combines the flexibility of React with advanced AI capabilities to create engaging conversational experiences.
+
+## Features
+- React-based component architecture
+- TypeScript support for type safety
+- Modern development workflow
+- AI-powered conversation handling
+- Extensible plugin system
+
+## Getting Started
+Documentation and setup instructions coming soon.
+
+## License
+MIT
