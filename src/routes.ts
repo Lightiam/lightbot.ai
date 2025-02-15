@@ -5,8 +5,16 @@ export const routes: Routes = {
     path: 'welcome',
     action: import('./actions/welcome'),
   },
+  help: {
+    path: 'help',
+    action: import('./actions/help'),
+  },
+  error: {
+    path: 'error',
+    action: import('./actions/error'),
+  },
   404: {
     path: '404',
-    action: () => import('./actions/welcome'),
+    action: () => import('./actions/error'),
   },
 }
