@@ -1,49 +1,52 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List, Optional
-from datetime import datetime
-import json
+from typing import List, Dict
+from .models import Message, Conversation
+import uuid
 
 app = FastAPI()
 
-# Disable CORS. Do not remove this for full-stack development.
+# Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # In-memory storage
-conversations = []
-
-class Message(BaseModel):
-    content: str
-    sender: str
-    timestamp: Optional[str] = None
-
-class Conversation(BaseModel):
-    id: str
-    messages: List[Message]
+conversations: Dict[str, Conversation] = {}
 
 @app.get("/healthz")
-async def healthz():
+async def health_check():
     return {"status": "ok"}
 
 @app.post("/api/chat")
 async def chat(message: Message):
-    message.timestamp = datetime.now().isoformat()
-    # Store message in memory
-    conversations.append(message.dict())
-    # Return bot response
-    return {
-        "content": "Thank you for your message. Our AI assistant will respond shortly.",
-        "sender": "bot",
-        "timestamp": datetime.now().isoformat()
-    }
+    conversation_id = str(uuid.uuid4())
+    if conversation_id not in conversations:
+        conversations[conversation_id] = Conversation(id=conversation_id)
+    
+    conversation = conversations[conversation_id]
+    conversation.messages.append(message)
+    
+    # Simple bot response
+    bot_message = Message(
+        content="Thank you for your message. Our AI assistant will respond shortly.",
+        sender="bot",
+        state=message.state
+    )
+    conversation.messages.append(bot_message)
+    
+    return bot_message
+
+@app.get("/api/conversations/{conversation_id}")
+async def get_conversation(conversation_id: str) -> Conversation:
+    if conversation_id not in conversations:
+        raise HTTPException(status_code=404, detail="Conversation not found")
+    return conversations[conversation_id]
 
 @app.get("/api/conversations")
-async def get_conversations():
-    return conversations
+async def list_conversations() -> List[Conversation]:
+    return list(conversations.values())
