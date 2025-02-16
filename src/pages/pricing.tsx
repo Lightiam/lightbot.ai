@@ -71,11 +71,6 @@ export function PricingPage() {
     </div>
   )
 }
-  }
-
-  return (
-    <div className="container mx-auto px-4 py-16 space-y-16">
-      <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold">
           Honest, Transparent & Affordable Chatbot Pricing
         </h1>
