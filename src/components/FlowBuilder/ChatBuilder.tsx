@@ -3,12 +3,15 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { NodeType, FlowNode } from './types';
 import { Connection, Edge } from 'reactflow';
+import { useFlowStore } from '@/lib/store/flowStore';
 import { FlowCanvas } from './FlowCanvas';
 import { NodeToolbar } from './NodeToolbar';
 import { PropertiesPanel } from './PropertiesPanel';
-import { Card } from '@/components/ui/card';
 import { useTheme } from '@/components/providers/theme-provider';
 import { DEFAULT_LEAD_FLOW } from './types';
+import { Button } from '@/components/ui/button';
+import { StatusBadge } from '@/components/ui/status-badge';
+import { useFlowActions } from '@/hooks/use-flow-actions';
 
 const defaultNodes: FlowNode[] = DEFAULT_LEAD_FLOW;
 
@@ -17,6 +20,8 @@ export function ChatBuilder() {
   const [nodes, setNodes] = useState<FlowNode[]>(defaultNodes);
   const [edges, setEdges] = useState<Edge[]>([]);
   const [selectedNode, setSelectedNode] = useState<FlowNode | null>(null);
+  const { isSaving, isDeploying, status } = useFlowStore();
+  const { handleSave, handleDeploy } = useFlowActions();
 
   const handleNodeAdd = useCallback((type: NodeType, position: { x: number; y: number }) => {
     const newNode: FlowNode = {
@@ -59,8 +64,36 @@ export function ChatBuilder() {
     <DndProvider backend={HTML5Backend}>
       <div className="grid grid-cols-[320px_1fr_320px] h-screen bg-background">
         <aside className="border-r border-border bg-card p-6 overflow-y-auto">
-          <h2 className="text-lg font-semibold mb-6 text-foreground">Node Types</h2>
-          <NodeToolbar onNodeAdd={handleNodeAdd} />
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <h2 className="text-lg font-semibold text-foreground">Flow Builder</h2>
+                <StatusBadge status={status} />
+              </div>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  variant="outline"
+                  size="sm"
+                >
+                  {isSaving ? 'Saving...' : 'Save'}
+                </Button>
+                <Button 
+                  onClick={handleDeploy}
+                  disabled={isDeploying || status !== 'draft'}
+                  className="bg-purple-600 hover:bg-purple-700"
+                  size="sm"
+                >
+                  {isDeploying ? 'Deploying...' : 'Deploy'}
+                </Button>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium mb-4 text-foreground">Node Types</h3>
+              <NodeToolbar onNodeAdd={handleNodeAdd} />
+            </div>
+          </div>
         </aside>
         <main className="bg-muted relative">
           <FlowCanvas
