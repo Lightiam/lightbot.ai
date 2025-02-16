@@ -71,8 +71,6 @@ export function PricingPage() {
     </div>
   )
 }
-
-export function PricingPage() {
   const [interval, setInterval] = useState<BillingInterval>('monthly')
 
   const handleSelectTier = (tierId: string) => {
