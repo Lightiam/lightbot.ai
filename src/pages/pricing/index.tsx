@@ -1,16 +1,35 @@
-import React, { useState } from "react"
-import { BillingToggle } from "../../components/pricing/BillingToggle"
-import { PricingTierCard } from "../../components/pricing/PricingTierCard"
-import { FeatureComparison } from "../../components/pricing/FeatureComparison"
-import { PRICING_TIERS } from "../../config/pricing"
-import type { BillingInterval } from "../../types/pricing"
+import React, { useState } from "react";
+import { BillingToggle } from "../../components/pricing/BillingToggle";
+import { PricingTierCard } from "../../components/pricing/PricingTierCard";
+import { FeatureComparison } from "../../components/pricing/FeatureComparison";
+import { PRICING_TIERS } from "../../config/pricing";
+import type { BillingInterval } from "../../types/pricing";
+import { useSubscription } from "../../hooks/use-subscription";
+import { useToast } from "../../components/ui/use-toast";
 
 export function PricingPage() {
   const [interval, setInterval] = useState<BillingInterval>("monthly")
 
-  const handleSelectTier = (tierId: string) => {
-    // TODO: Implement subscription flow
-    console.log("Selected tier:", tierId)
+  const { createNewSubscription, loading, error } = useSubscription();
+  const { toast } = useToast();
+
+  const handleSelectTier = async (tierId: string) => {
+    if (loading) return;
+
+    try {
+      await createNewSubscription(tierId, interval);
+      toast({
+        title: "Success",
+        description: "Redirecting to checkout...",
+      });
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to create subscription. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Failed to create subscription:", err);
+    }
   }
 
   return (
@@ -50,6 +69,7 @@ export function PricingPage() {
             tier={tier}
             interval={interval}
             onSelect={handleSelectTier}
+            loading={loading}
           />
         ))}
       </div>

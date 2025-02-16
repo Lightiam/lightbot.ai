@@ -9,7 +9,8 @@ import { getAnnualDiscount } from "../../config/pricing"
 interface PricingTierCardProps {
   tier: PricingTier
   interval: BillingInterval
-  onSelect: (tierId: string) => void
+  onSelect: (tierId: string) => Promise<void>
+  loading?: boolean
 }
 
 export function PricingTierCard({ tier, interval, onSelect }: PricingTierCardProps) {
@@ -88,6 +89,7 @@ export function PricingTierCard({ tier, interval, onSelect }: PricingTierCardPro
           <Button
             className={`w-full ${tier.highlighted ? 'bg-purple-600 hover:bg-purple-700' : ''}`}
             onClick={() => onSelect(tier.id)}
+            disabled={loading}
           >
             {price === 0 ? 'Start Free' : price === -1 ? 'Contact Sales' : 'Get Started'}
           </Button>
