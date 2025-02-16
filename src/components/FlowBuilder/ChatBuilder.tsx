@@ -1,17 +1,18 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback, type FC } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { NodeType, FlowNode } from './types';
-import { Connection, Edge } from 'reactflow';
-import { useFlowStore } from '@/lib/store/flowStore';
+import type { FlowNode } from './types';
+import { NodeType, DEFAULT_LEAD_FLOW } from './types';
+import type { Connection, Edge, Node } from 'reactflow';
+import { useFlowStore } from '../../lib/store/flowStore';
 import { FlowCanvas } from './FlowCanvas';
 import { NodeToolbar } from './NodeToolbar';
 import { PropertiesPanel } from './PropertiesPanel';
-import { useTheme } from '@/components/providers/theme-provider';
-import { DEFAULT_LEAD_FLOW } from './types';
-import { Button } from '@/components/ui/button';
-import { StatusBadge } from '@/components/ui/status-badge';
-import { useFlowActions } from '@/hooks/use-flow-actions';
+import { useTheme } from '../providers/theme-provider';
+import { Button } from '../ui/button';
+import { StatusBadge } from '../ui/status-badge';
+import { useFlowActions } from '../../hooks/use-flow-actions';
+import 'reactflow/dist/style.css';
 
 const defaultNodes: FlowNode[] = DEFAULT_LEAD_FLOW;
 
