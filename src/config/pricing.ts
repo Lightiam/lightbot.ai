@@ -139,11 +139,6 @@ export const PRICING_TIERS: PricingTier[] = [
     ]
   }
 ];
-    highlighted: true
-  },
-  {
-    id: 'emperor',
-    name: 'Emperor Plan',
     price: {
       monthly: -1, // Custom pricing
       yearly: -1  // Custom pricing
