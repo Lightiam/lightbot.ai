@@ -139,50 +139,6 @@ export const PRICING_TIERS: PricingTier[] = [
     ]
   }
 ];
-  {
-    id: 'little',
-    name: 'Little Plan',
-    price: {
-      monthly: 15,
-      yearly: 150
-    },
-    description: 'For Growing Teams',
-    limits: {
-      messages: 3000,
-      conversations: 3000,
-      chatbots: 5,
-      agents: 5
-    },
-    features: [
-      'Everything in Baby Plan',
-      'Lead Notification on Email',
-      'Appointment Booking',
-      'Customer Segmentation',
-      'Custom Attributes & Tags',
-      'Drip & Broadcast Campaigns',
-      'Mobile Apps for agents',
-      'Order/Shop Management',
-      'CRM Integrations',
-      'Ticketing System Integrations',
-      'Woo-commerce Integration',
-      'Shopify Integration',
-      '30+ Integrations'
-    ]
-  },
-  {
-    id: 'king',
-    name: 'King Plan',
-    price: {
-      monthly: 50,
-      yearly: 500
-    },
-    description: 'Most Popular',
-    limits: {
-      messages: 12000,
-      conversations: 12000,
-      chatbots: -1, // Unlimited
-      agents: 10
-    },
     features: [
       'Everything in Little Plan',
       'Advanced AI Training',
