@@ -1,4 +1,4 @@
-import React, { type FC } from "react"
+import React from "react"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "./button"
 import { useTheme } from "../providers/theme-provider"
