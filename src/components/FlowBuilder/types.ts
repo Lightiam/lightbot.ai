@@ -1,5 +1,15 @@
 import type { Node } from 'reactflow';
 
+export interface NodeData {
+  label?: string;
+  message?: string;
+  variable?: string;
+  condition?: string;
+  api_endpoint?: string;
+  required?: boolean;
+  options?: string[];
+}
+
 export enum NodeType {
   START = 'start',
   MESSAGE = 'message',
@@ -13,15 +23,7 @@ export interface FlowNode extends Node {
   id: string;
   type: NodeType;
   position: { x: number; y: number };
-  data: {
-    label?: string;
-    message?: string;
-    variable?: string;
-    condition?: string;
-    api_endpoint?: string;
-    required?: boolean;
-    options?: string[];
-  };
+  data: NodeData;
 }
 
 export const DEFAULT_LEAD_FLOW: FlowNode[] = [

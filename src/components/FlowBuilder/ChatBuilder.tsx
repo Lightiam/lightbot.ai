@@ -1,9 +1,9 @@
-import React, { useState, useCallback, type FC } from 'react';
+import { useState, useCallback } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import type { FlowNode } from './types';
 import { NodeType, DEFAULT_LEAD_FLOW } from './types';
-import type { Connection, Edge, Node } from 'reactflow';
+import type { Connection, Edge } from 'reactflow';
 import { useFlowStore } from '../../lib/store/flowStore';
 import { FlowCanvas } from './FlowCanvas';
 import { NodeToolbar } from './NodeToolbar';

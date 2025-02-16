@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import * as React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { NodeType, FlowNode } from './types';
@@ -6,19 +6,18 @@ import { Connection, Edge } from 'reactflow';
 import { FlowCanvas } from './FlowCanvas';
 import { NodeToolbar } from './NodeToolbar';
 import { PropertiesPanel } from './PropertiesPanel';
-import { Card } from '@/components/ui/card';
-import { useTheme } from '@/components/providers/theme-provider';
+import { useTheme } from '../providers/theme-provider';
 import { DEFAULT_LEAD_FLOW } from './types';
 
 const defaultNodes: FlowNode[] = DEFAULT_LEAD_FLOW;
 
 export function ChatBuilder() {
   const { theme } = useTheme();
-  const [nodes, setNodes] = useState<FlowNode[]>(defaultNodes);
-  const [edges, setEdges] = useState<Edge[]>([]);
-  const [selectedNode, setSelectedNode] = useState<FlowNode | null>(null);
+  const [nodes, setNodes] = React.useState<FlowNode[]>(defaultNodes);
+  const [edges, setEdges] = React.useState<Edge[]>([]);
+  const [selectedNode, setSelectedNode] = React.useState<FlowNode | null>(null);
 
-  const handleNodeAdd = useCallback((type: NodeType, position: { x: number; y: number }) => {
+  const handleNodeAdd = React.useCallback((type: NodeType, position: { x: number; y: number }): void => {
     const newNode: FlowNode = {
       id: `node-${Date.now()}`,
       type,
@@ -34,17 +33,17 @@ export function ChatBuilder() {
     setNodes((nodes) => [...nodes, newNode]);
   }, []);
 
-  const handleNodeSelect = useCallback((node: FlowNode) => {
+  const handleNodeSelect = React.useCallback((node: FlowNode): void => {
     setSelectedNode(node);
   }, []);
 
-  const handleNodeUpdate = useCallback((updatedNode: FlowNode) => {
+  const handleNodeUpdate = React.useCallback((updatedNode: FlowNode): void => {
     setNodes((nodes) => nodes.map(node => 
       node.id === updatedNode.id ? updatedNode : node
     ));
   }, []);
 
-  const handleConnect = useCallback((params: Connection) => {
+  const handleConnect = React.useCallback((params: Connection): void => {
     const newConnection = {
       ...params,
       id: `edge-${Date.now()}`,

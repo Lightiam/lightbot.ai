@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
-import { ChatState, ChatAction, Message } from './types';
+import { ChatState, ChatAction } from './types';
 
 const initialState: ChatState = {
   messages: [],

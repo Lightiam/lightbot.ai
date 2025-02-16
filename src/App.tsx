@@ -1,4 +1,4 @@
-import React from 'react';
+// No React import needed
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useToast } from './components/ui/use-toast';
 import { ChatBuilder } from './components/FlowBuilder/ChatBuilder';

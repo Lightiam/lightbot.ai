@@ -1,4 +1,4 @@
-import React from "react"
+// No React import needed
 import { Moon, Sun } from "lucide-react"
 import { Button } from "./button"
 import { useTheme } from "../providers/theme-provider"

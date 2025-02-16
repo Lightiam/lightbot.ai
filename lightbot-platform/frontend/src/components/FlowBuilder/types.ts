@@ -21,7 +21,7 @@ export interface FlowNode extends Node {
     api_endpoint?: string;
     required?: boolean;
     options?: string[];
-    [key: string]: any;
+    [key: string]: string | number | boolean | string[] | undefined;
   };
 }
 

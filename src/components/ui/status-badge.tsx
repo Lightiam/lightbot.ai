@@ -1,4 +1,4 @@
-import React, { type FC } from "react"
+import { type FC } from "react"
 import { Badge } from "./badge"
 import { cn } from "../../lib/utils"
 import type { FlowStatus } from "../../types"
