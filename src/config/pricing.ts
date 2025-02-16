@@ -139,11 +139,6 @@ export const PRICING_TIERS: PricingTier[] = [
     ]
   }
 ];
-      'SLA Support',
-      'API Access',
-      'White Label Options',
-      '50+ Integrations'
-    ],
     highlighted: true
   },
   {

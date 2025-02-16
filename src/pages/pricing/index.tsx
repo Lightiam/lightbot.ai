@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";;
 import { BillingToggle } from "../../components/pricing/BillingToggle";
 import { PricingTierCard } from "../../components/pricing/PricingTierCard";
 import { FeatureComparison } from "../../components/pricing/FeatureComparison";
@@ -8,8 +9,8 @@ import { useSubscription } from "../../hooks/use-subscription";
 import { useToast } from "../../components/ui/use-toast";
 
 export function PricingPage() {
-  const [interval, setInterval] = useState<BillingInterval>("monthly")
-
+  const [interval, setInterval] = useState<BillingInterval>("monthly");
+  const navigate = useNavigate();
   const { createNewSubscription, loading } = useSubscription();
   const { toast } = useToast();
 
@@ -17,11 +18,12 @@ export function PricingPage() {
     if (loading) return;
 
     try {
-      await createNewSubscription(tierId, interval);
+      const result = await createNewSubscription(tierId, interval);
       toast({
         title: "Success",
         description: "Redirecting to checkout...",
       });
+      navigate("/success");
     } catch (err) {
       toast({
         title: "Error",
