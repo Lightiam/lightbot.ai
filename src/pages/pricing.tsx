@@ -3,6 +3,7 @@ import { BillingToggle } from "../components/pricing/BillingToggle"
 import { PricingTierCard } from "../components/pricing/PricingTierCard"
 import { FeatureComparison } from "../components/pricing/FeatureComparison"
 import { Card } from "../components/ui/card"
+import { Badge } from "../components/ui/badge"
 import { PRICING_TIERS } from "../config/pricing"
 import type { BillingInterval } from "../types/pricing"
 
