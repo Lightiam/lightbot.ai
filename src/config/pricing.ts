@@ -92,6 +92,99 @@ export const PRICING_TIERS: PricingTier[] = [
     },
     features: [
       'Everything in Little Plan',
+      'MS Teams Chatbot Platform*',
+      'ChatGPT AI Integration',
+      'Assistant Model',
+      'Configure AI Chatbot Training',
+      'Your Knowledge base',
+      'ChatGPT Knowledge Base',
+      'Trigger Actions on Unusual AI Chat Scenarios',
+      'Role-based Access Controls',
+      'API Integration in Chatflows',
+      'Zapier Integration',
+      'Simplybook Integration',
+      'Zoho Commerce Integration',
+      '50+ Integrations'
+    ],
+    highlighted: true
+  },
+  {
+    id: 'emperor',
+    name: 'Emperor Plan',
+    price: {
+      monthly: -1, // Custom pricing
+      yearly: -1  // Custom pricing
+    },
+    description: 'For Enterprise',
+    limits: {
+      messages: -1, // As per need
+      conversations: -1, // As per need
+      chatbots: -1, // Unlimited
+      agents: -1  // Unlimited
+    },
+    features: [
+      'Everything in King Plan',
+      'Chatbot Platforms',
+      'AI Bot Training on',
+      'Customized As Per Your Need',
+      'Advanced Analytics & Reporting',
+      'Extensive Integrations',
+      'Remove BotPenguin Branding',
+      'Rule Based Chat Routing',
+      'Custom Campaigns & Tracking',
+      'FB E-commerce Integration',
+      'We\'ll build it for you',
+      'Advanced Security Modules',
+      '80+ Integrations'
+    ]
+  }
+];
+  {
+    id: 'little',
+    name: 'Little Plan',
+    price: {
+      monthly: 15,
+      yearly: 150
+    },
+    description: 'For Growing Teams',
+    limits: {
+      messages: 3000,
+      conversations: 3000,
+      chatbots: 5,
+      agents: 5
+    },
+    features: [
+      'Everything in Baby Plan',
+      'Lead Notification on Email',
+      'Appointment Booking',
+      'Customer Segmentation',
+      'Custom Attributes & Tags',
+      'Drip & Broadcast Campaigns',
+      'Mobile Apps for agents',
+      'Order/Shop Management',
+      'CRM Integrations',
+      'Ticketing System Integrations',
+      'Woo-commerce Integration',
+      'Shopify Integration',
+      '30+ Integrations'
+    ]
+  },
+  {
+    id: 'king',
+    name: 'King Plan',
+    price: {
+      monthly: 50,
+      yearly: 500
+    },
+    description: 'Most Popular',
+    limits: {
+      messages: 12000,
+      conversations: 12000,
+      chatbots: -1, // Unlimited
+      agents: 10
+    },
+    features: [
+      'Everything in Little Plan',
       'Advanced AI Training',
       'Custom Bot Development',
       'Priority Support',

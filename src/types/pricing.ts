@@ -16,6 +16,16 @@ export interface PricingTier {
   highlighted?: boolean;
 }
 
+export interface AddOnPricing {
+  id: string;
+  name: string;
+  price: {
+    monthly: number;
+    yearly: number;
+  };
+  description?: string;
+}
+
 export interface SubscriptionPlan {
   id: string;
   tier: PricingTier;
@@ -26,6 +36,7 @@ export interface SubscriptionPlan {
     messages: number;
     conversations: number;
   };
+  addOns?: AddOnPricing[];
 }
 
 export type BillingInterval = 'monthly' | 'yearly';
@@ -34,12 +45,14 @@ export type SubscriptionStatus = 'active' | 'canceled' | 'past_due' | 'incomplet
 export interface CreateSubscriptionInput {
   tierId: string;
   interval: BillingInterval;
+  addOnIds?: string[];
 }
 
 export interface UpdateSubscriptionInput {
   subscriptionId: string;
   tierId: string;
   interval: BillingInterval;
+  addOnIds?: string[];
 }
 
 export interface CancelSubscriptionInput {
