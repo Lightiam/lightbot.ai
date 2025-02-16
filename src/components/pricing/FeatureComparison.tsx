@@ -1,4 +1,4 @@
-import React from "react"
+// No React import needed
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { Check, Minus } from "lucide-react"
 import { PRICING_TIERS } from "../../config/pricing"

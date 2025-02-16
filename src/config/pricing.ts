@@ -139,33 +139,6 @@ export const PRICING_TIERS: PricingTier[] = [
     ]
   }
 ];
-    price: {
-      monthly: -1, // Custom pricing
-      yearly: -1  // Custom pricing
-    },
-    description: 'For Enterprise',
-    limits: {
-      messages: -1, // As per need
-      conversations: -1, // As per need
-      chatbots: -1, // Unlimited
-      agents: -1  // Unlimited
-    },
-    features: [
-      'Everything in King Plan',
-      'Custom Development',
-      'Enterprise Security',
-      'Dedicated Support Team',
-      'Custom SLA',
-      'On-premise Deployment',
-      'Custom AI Training',
-      'Unlimited Storage',
-      'Advanced Role Management',
-      'Custom Analytics',
-      'Custom Integrations',
-      'Dedicated Infrastructure'
-    ]
-  }
-];
 
 export const PRICING_FEATURES = {
   chatbotPlatforms: ['Website', 'Facebook', 'WhatsApp', 'Instagram', 'Telegram', 'Line'],

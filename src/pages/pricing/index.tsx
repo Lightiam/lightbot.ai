@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";;
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BillingToggle } from "../../components/pricing/BillingToggle";
 import { PricingTierCard } from "../../components/pricing/PricingTierCard";
 import { FeatureComparison } from "../../components/pricing/FeatureComparison";
@@ -18,7 +18,7 @@ export function PricingPage() {
     if (loading) return;
 
     try {
-      const result = await createNewSubscription(tierId, interval);
+      await createNewSubscription(tierId, interval);
       toast({
         title: "Success",
         description: "Redirecting to checkout...",

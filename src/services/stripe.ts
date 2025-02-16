@@ -1,5 +1,5 @@
 import { loadStripe } from '@stripe/stripe-js'
-import type { BillingInterval, CreateSubscriptionInput, UpdateSubscriptionInput, CancelSubscriptionInput } from '../types/pricing'
+import type { CreateSubscriptionInput, UpdateSubscriptionInput, CancelSubscriptionInput } from '../types/pricing'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 

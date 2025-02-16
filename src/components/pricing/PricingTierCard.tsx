@@ -1,4 +1,4 @@
-import React from "react"
+// No React import needed
 import { Button } from "../ui/button"
 import { Card, CardHeader, CardContent } from "../ui/card"
 import { Badge } from "../ui/badge"
@@ -13,7 +13,7 @@ interface PricingTierCardProps {
   loading?: boolean
 }
 
-export function PricingTierCard({ tier, interval, onSelect }: PricingTierCardProps) {
+export function PricingTierCard({ tier, interval, onSelect, loading = false }: PricingTierCardProps) {
   const price = interval === 'yearly' 
     ? tier.price.yearly 
     : tier.price.monthly;

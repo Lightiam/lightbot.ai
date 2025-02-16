@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import type { BillingInterval, SubscriptionPlan } from '../types/pricing'
+import type { BillingInterval } from '../types/pricing'
 import { createSubscription, updateSubscription, cancelSubscription, getSubscriptionStatus } from '../services/stripe'
 import { useToast } from '../components/ui/use-toast'
 
