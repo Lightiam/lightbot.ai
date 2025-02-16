@@ -11,8 +11,8 @@ import ReactFlow, {
   Edge,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { useTheme } from '@/components/providers/theme-provider';
+import { LoadingSpinner } from '../ui/loading-spinner';
+import { useTheme } from '../providers/theme-provider';
 import { FlowNode, NodeType } from './types';
 
 interface FlowCanvasProps {

@@ -1,7 +1,8 @@
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import type { ChangeEvent } from 'react';
 import { FlowNode, NodeType } from './types';
 
 interface PropertiesPanelProps {
@@ -50,7 +51,7 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
             <Textarea
               id="message"
               value={selectedNode.data.message || ''}
-              onChange={(e) => handleChange('message', e.target.value)}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleChange('message', e.target.value)}
               placeholder="Enter message text..."
               className="min-h-[100px]"
             />
@@ -63,7 +64,7 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
             <Input
               id="variable"
               value={selectedNode.data.variable || ''}
-              onChange={(e) => handleChange('variable', e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange('variable', e.target.value)}
               placeholder="Enter variable name..."
             />
           </div>
@@ -75,7 +76,7 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
             <Input
               id="condition"
               value={selectedNode.data.condition || ''}
-              onChange={(e) => handleChange('condition', e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange('condition', e.target.value)}
               placeholder="Enter condition..."
             />
           </div>
@@ -87,7 +88,7 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
             <Input
               id="endpoint"
               value={selectedNode.data.api_endpoint || ''}
-              onChange={(e) => handleChange('api_endpoint', e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange('api_endpoint', e.target.value)}
               placeholder="Enter API endpoint..."
             />
           </div>

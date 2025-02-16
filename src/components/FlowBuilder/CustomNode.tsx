@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import { NodeData, NODE_TYPES } from './NodeTypes';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';

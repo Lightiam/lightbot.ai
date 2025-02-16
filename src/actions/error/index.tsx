@@ -1,8 +1,8 @@
 import React from 'react'
-import { RequestContext, Text } from '@botonic/react'
+import { Text } from '@botonic/react'
 
 export default class ErrorAction extends React.Component {
-  static async botonicInit({ input, session }: RequestContext) {
+  static async botonicInit({ input }: { input: { error: string } }) {
     return { error: input.error }
   }
 

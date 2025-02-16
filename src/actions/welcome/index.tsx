@@ -1,8 +1,8 @@
 import React from 'react'
-import { RequestContext, Text } from '@botonic/react'
+import { Text } from '@botonic/react'
 
 export default class Welcome extends React.Component {
-  static async botonicInit({ input, session }: RequestContext) {
+  static async botonicInit() {
     return { name: 'Welcome' }
   }
 

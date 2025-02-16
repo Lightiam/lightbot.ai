@@ -19,7 +19,7 @@ export const plugins = [
     options: {
       measurementId: process.env.GA_MEASUREMENT_ID || 'G-XXXXXXXXXX',
       apiSecret: process.env.GA_API_SECRET,
-      getUserId: ({ session }) => session.user.id
+      getUserId: ({ session }: { session: { user: { id: string } } }) => session.user.id
     }
   }
 ]

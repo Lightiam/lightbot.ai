@@ -1,5 +1,7 @@
-import { App } from '@botonic/react'
+import { getBotonicApp } from '@botonic/react'
 import { routes } from './routes'
 import { plugins } from './plugins'
 
-export const app = new App({ routes, plugins })
+const app = getBotonicApp()
+app.configure({ routes, plugins })
+export { app }

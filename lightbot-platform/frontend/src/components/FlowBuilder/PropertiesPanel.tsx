@@ -24,7 +24,7 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
     );
   }
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string | number | boolean | string[] | undefined) => {
     onNodeUpdate({
       ...selectedNode,
       data: {
