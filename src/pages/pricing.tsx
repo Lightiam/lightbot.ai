@@ -71,11 +71,6 @@ export function PricingPage() {
     </div>
   )
 }
-  const [interval, setInterval] = useState<BillingInterval>('monthly')
-
-  const handleSelectTier = (tierId: string) => {
-    // TODO: Implement subscription flow
-    console.log('Selected tier:', tierId)
   }
 
   return (
