@@ -139,16 +139,6 @@ export const PRICING_TIERS: PricingTier[] = [
     ]
   }
 ];
-    features: [
-      'Everything in Little Plan',
-      'Advanced AI Training',
-      'Custom Bot Development',
-      'Priority Support',
-      'Advanced Analytics',
-      'Team Collaboration',
-      'Custom Integrations',
-      'Advanced Security Features',
-      'Dedicated Account Manager',
       'SLA Support',
       'API Access',
       'White Label Options',

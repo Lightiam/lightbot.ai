@@ -10,7 +10,7 @@ import { useToast } from "../../components/ui/use-toast";
 export function PricingPage() {
   const [interval, setInterval] = useState<BillingInterval>("monthly")
 
-  const { createNewSubscription, loading, error } = useSubscription();
+  const { createNewSubscription, loading } = useSubscription();
   const { toast } = useToast();
 
   const handleSelectTier = async (tierId: string) => {
