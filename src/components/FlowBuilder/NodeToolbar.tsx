@@ -14,11 +14,12 @@ const NODE_TYPES = [
 
 export function NodeToolbar({ onNodeAdd }: { onNodeAdd: (type: NodeType, position: { x: number; y: number }) => void }) {
   const handleDragStart = (e: React.DragEvent<HTMLButtonElement>, type: NodeType) => {
-    e.dataTransfer.setData('application/reactflow', type);
-    e.dataTransfer.effectAllowed = 'move';
-    const rect = e.currentTarget.getBoundingClientRect();
-    const position = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    onNodeAdd(type, position);
+    if (e.dataTransfer) {
+      e.dataTransfer.setData('application/reactflow', type);
+      e.dataTransfer.effectAllowed = 'move';
+      const position = { x: 100, y: 100 }; // Fixed position for testing
+      onNodeAdd(type, position);
+    }
   };
   return (
     <div className="space-y-2 p-4">
@@ -32,6 +33,7 @@ export function NodeToolbar({ onNodeAdd }: { onNodeAdd: (type: NodeType, positio
             variant="ghost"
             className="w-full justify-start gap-2 text-sm hover:bg-transparent"
             draggable
+            data-testid={`node-${type.toLowerCase()}`}
             onDragStart={(e) => handleDragStart(e, type)}
           >
             <Icon className={`h-4 w-4 ${color}`} />

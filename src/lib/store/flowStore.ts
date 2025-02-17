@@ -1,24 +1,29 @@
 import { create } from 'zustand';
-import { Node, Edge } from 'reactflow';
+import { Edge } from 'reactflow';
 import { produce } from 'immer';
 import type { FlowStatus, FlowResponse, FlowDefinition } from '@/types';
+import type { FlowNode } from '@/components/FlowBuilder/types';
 import { saveFlow, deployFlow } from '@/services/api';
 
 interface FlowState {
   id?: string;
   name: string;
   description: string;
-  nodes: Node[];
+  nodes: FlowNode[];
   edges: Edge[];
+  selectedNode: FlowNode | null;
   version?: number;
   status: FlowStatus;
   isSaving: boolean;
   isDeploying: boolean;
-  addNode: (node: Node) => void;
-  updateNode: (id: string, data: Partial<Node['data']>) => void;
+  addNode: (node: FlowNode) => void;
+  updateNode: (id: string, data: Partial<FlowNode['data']>) => void;
   removeNode: (id: string) => void;
   addEdge: (edge: Edge) => void;
   removeEdge: (id: string) => void;
+  setNodes: (nodes: FlowNode[] | ((nodes: FlowNode[]) => FlowNode[])) => void;
+  setEdges: (edges: Edge[] | ((edges: Edge[]) => Edge[])) => void;
+  setSelectedNode: (node: FlowNode | null) => void;
   setName: (name: string) => void;
   setDescription: (description: string) => void;
   save: () => Promise<void>;
@@ -30,21 +35,26 @@ export const useFlowStore = create<FlowState>((set, get) => ({
   description: '',
   nodes: [],
   edges: [],
+  selectedNode: null,
   status: 'draft',
   isSaving: false,
   isDeploying: false,
+  
+  setNodes: (nodes) => set({ nodes: typeof nodes === 'function' ? nodes(get().nodes) : nodes }),
+  setEdges: (edges) => set({ edges: typeof edges === 'function' ? edges(get().edges) : edges }),
+  setSelectedNode: (node) => set({ selectedNode: node }),
 
-  addNode: (node: Node) =>
+  addNode: (node: FlowNode) =>
     set(
       produce((state) => {
         state.nodes.push(node);
       })
     ),
 
-  updateNode: (id: string, data: Partial<Node['data']>) =>
+  updateNode: (id: string, data: Partial<FlowNode['data']>) =>
     set(
       produce((state) => {
-        const node = state.nodes.find((n: Node) => n.id === id);
+        const node = state.nodes.find((n: FlowNode) => n.id === id);
         if (node) {
           Object.assign(node.data, data);
         }
@@ -54,7 +64,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
   removeNode: (id: string) =>
     set(
       produce((state) => {
-        state.nodes = state.nodes.filter((n: Node) => n.id !== id);
+        state.nodes = state.nodes.filter((n: FlowNode) => n.id !== id);
         state.edges = state.edges.filter(
           (e: Edge) => e.source !== id && e.target !== id
         );
@@ -86,7 +96,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
         id: state.id,
         name: state.name,
         description: state.description,
-        nodes: state.nodes.map((n: Node) => ({
+        nodes: state.nodes.map((n) => ({
           ...n,
           data: { ...n.data }
         })),

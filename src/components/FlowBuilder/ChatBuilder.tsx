@@ -2,9 +2,12 @@ import { useState, useCallback } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import type { FlowNode } from './types';
-import { NodeType, DEFAULT_LEAD_FLOW } from './types';
+import { NodeType } from './types';
 import type { Connection, Edge } from 'reactflow';
 import { useFlowStore } from '../../lib/store/flowStore';
+
+// Remove unused defaultNodes
+// const defaultNodes: FlowNode[] = DEFAULT_LEAD_FLOW;
 import { FlowCanvas } from './FlowCanvas';
 import { NodeToolbar } from './NodeToolbar';
 import { PropertiesPanel } from './PropertiesPanel';
@@ -12,17 +15,15 @@ import { useTheme } from '../providers/theme-provider';
 import { Button } from '../ui/button';
 import { StatusBadge } from '../ui/status-badge';
 import { useFlowActions } from '../../hooks/use-flow-actions';
+import { BarChart2 } from 'lucide-react';
+import { FlowVisualizer } from './FlowVisualizer';
 import 'reactflow/dist/style.css';
-
-const defaultNodes: FlowNode[] = DEFAULT_LEAD_FLOW;
 
 export function ChatBuilder() {
   const { theme } = useTheme();
-  const [nodes, setNodes] = useState<FlowNode[]>(defaultNodes);
-  const [edges, setEdges] = useState<Edge[]>([]);
-  const [selectedNode, setSelectedNode] = useState<FlowNode | null>(null);
-  const { isSaving, isDeploying, status } = useFlowStore();
+  const { nodes, edges, selectedNode, isSaving, isDeploying, status, setEdges, setSelectedNode, addNode, updateNode } = useFlowStore();
   const { handleSave, handleDeploy } = useFlowActions();
+  const [view, setView] = useState<'edit' | 'preview' | 'visualize'>('edit');
 
   const handleNodeAdd = useCallback((type: NodeType, position: { x: number; y: number }) => {
     const newNode: FlowNode = {
@@ -37,18 +38,18 @@ export function ChatBuilder() {
         api_endpoint: type === NodeType.API ? '' : undefined,
       }
     };
-    setNodes((nodes) => [...nodes, newNode]);
-  }, []);
+    addNode(newNode);
+    setSelectedNode(newNode);
+  }, [addNode, setSelectedNode]);
 
   const handleNodeSelect = useCallback((node: FlowNode) => {
     setSelectedNode(node);
-  }, []);
+  }, [setSelectedNode]);
 
   const handleNodeUpdate = useCallback((updatedNode: FlowNode) => {
-    setNodes((nodes) => nodes.map(node => 
-      node.id === updatedNode.id ? updatedNode : node
-    ));
-  }, []);
+    const { id, data } = updatedNode;
+    updateNode(id, data);
+  }, [updateNode]);
 
   const handleConnect = useCallback((params: Connection) => {
     const newConnection = {
@@ -59,7 +60,7 @@ export function ChatBuilder() {
       style: { stroke: theme === 'dark' ? '#9333ea' : '#a855f7', strokeWidth: 2 }
     } as Edge;
     setEdges((edges) => [...edges, newConnection]);
-  }, [theme]);
+  }, [theme, setEdges]);
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -71,38 +72,56 @@ export function ChatBuilder() {
                 <h2 className="text-lg font-semibold text-foreground">Flow Builder</h2>
                 <StatusBadge status={status} />
               </div>
-              <div className="flex gap-2">
-                <Button 
-                  onClick={handleSave}
-                  disabled={isSaving}
-                  variant="outline"
-                  size="sm"
-                >
-                  {isSaving ? 'Saving...' : 'Save'}
-                </Button>
-                <Button 
-                  onClick={handleDeploy}
-                  disabled={isDeploying || status !== 'draft'}
-                  className="bg-purple-600 hover:bg-purple-700"
-                  size="sm"
-                >
-                  {isDeploying ? 'Deploying...' : 'Deploy'}
-                </Button>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => setView('visualize')}
+                  >
+                    <BarChart2 className="h-4 w-4 mr-1" />
+                    Visualize
+                  </Button>
+                </div>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={handleSave}
+                    disabled={isSaving}
+                    variant="outline"
+                    size="sm"
+                    data-testid="save-button"
+                  >
+                    {isSaving ? 'Saving...' : 'Save'}
+                  </Button>
+                  <Button 
+                    onClick={handleDeploy}
+                    disabled={isDeploying || status !== 'draft'}
+                    className="bg-purple-600 hover:bg-purple-700"
+                    size="sm"
+                    data-testid="deploy-button"
+                  >
+                    {isDeploying ? 'Deploying...' : 'Deploy'}
+                  </Button>
+                </div>
               </div>
             </div>
             <div>
-              <h3 className="text-sm font-medium mb-4 text-foreground">Node Types</h3>
+              <h3 className="text-sm font-medium mb-4 text-foreground">Available Nodes</h3>
               <NodeToolbar onNodeAdd={handleNodeAdd} />
             </div>
           </div>
         </aside>
         <main className="bg-muted relative">
-          <FlowCanvas
-            nodes={nodes}
-            edges={edges}
-            onNodeSelect={handleNodeSelect}
-            onConnect={handleConnect}
-          />
+          {view === 'edit' ? (
+            <FlowCanvas
+              nodes={nodes}
+              edges={edges}
+              onNodeSelect={handleNodeSelect}
+              onConnect={handleConnect}
+            />
+          ) : view === 'visualize' ? (
+            <FlowVisualizer nodes={nodes} edges={edges} />
+          ) : null}
         </main>
         <aside className="border-l border-border bg-card p-6 overflow-y-auto">
           <h2 className="text-lg font-semibold mb-6 text-foreground">Properties</h2>
