@@ -1,4 +1,4 @@
-import type { Node } from 'reactflow';
+import type { Node as ReactFlowNode } from 'reactflow';
 
 export interface NodeData {
   label?: string;
@@ -8,22 +8,50 @@ export interface NodeData {
   api_endpoint?: string;
   required?: boolean;
   options?: string[];
+  keyword?: string;
+  intent?: string;
+  value?: string;
+  webhook_url?: string;
+  webhook_method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  webhook_headers?: Record<string, string>;
 }
 
 export enum NodeType {
   START = 'start',
+  KEYWORD = 'keyword',
+  WELCOME = 'welcome',
+  INTENT = 'intent',
   MESSAGE = 'message',
   INPUT = 'input',
   CONDITION = 'condition',
   API = 'api',
+  VARIABLE = 'variable',
   END = 'end'
 }
 
-export interface FlowNode extends Node {
+export interface FlowNode extends ReactFlowNode {
   id: string;
   type: NodeType;
   position: { x: number; y: number };
   data: NodeData;
+}
+
+export interface FlowVariable {
+  name: string;
+  value: string;
+  scope: 'flow' | 'user' | 'global';
+}
+
+export interface FlowWebhook {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  headers?: Record<string, string>;
+  body?: Record<string, unknown>;
+}
+
+export interface FlowTrigger {
+  type: 'keyword' | 'welcome' | 'intent';
+  value: string;
 }
 
 export const DEFAULT_LEAD_FLOW: FlowNode[] = [

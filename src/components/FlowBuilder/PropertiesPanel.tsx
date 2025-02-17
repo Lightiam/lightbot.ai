@@ -1,7 +1,8 @@
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Textarea } from '../ui/textarea';
+import { useCallback } from 'react';
 import type { ChangeEvent } from 'react';
 import { FlowNode, NodeType } from './types';
 
@@ -11,11 +12,23 @@ interface PropertiesPanelProps {
 }
 
 export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelProps) {
+  const handleChange = useCallback((field: string, value: string) => {
+    if (!selectedNode) return;
+    
+    onNodeUpdate({
+      ...selectedNode,
+      data: {
+        ...selectedNode.data,
+        [field]: value
+      }
+    });
+  }, [selectedNode, onNodeUpdate]);
+
   if (!selectedNode) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Properties</CardTitle>
+          <CardTitle data-testid="properties-title">Properties</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">Select a node to edit its properties</p>
@@ -24,20 +37,10 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
     );
   }
 
-  const handleChange = (field: string, value: string) => {
-    onNodeUpdate({
-      ...selectedNode,
-      data: {
-        ...selectedNode.data,
-        [field]: value
-      }
-    });
-  };
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Properties</CardTitle>
+        <CardTitle data-testid="properties-title">Properties</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -47,13 +50,17 @@ export function PropertiesPanel({ selectedNode, onNodeUpdate }: PropertiesPanelP
 
         {selectedNode.type === NodeType.MESSAGE && (
           <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message-input">Message</Label>
             <Textarea
-              id="message"
+              id="message-input"
+              data-testid="message-input"
+              aria-label="Message input"
+              role="textbox"
+              className="min-h-[100px] resize-none message-input"
               value={selectedNode.data.message || ''}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => handleChange('message', e.target.value)}
+              onChange={(e) => handleChange('message', e.target.value)}
               placeholder="Enter message text..."
-              className="min-h-[100px]"
+              autoFocus
             />
           </div>
         )}
